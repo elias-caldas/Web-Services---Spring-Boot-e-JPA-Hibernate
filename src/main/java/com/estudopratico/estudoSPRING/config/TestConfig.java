@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.estudopratico.estudoSPRING.entities.Category;
 import com.estudopratico.estudoSPRING.entities.Order;
 import com.estudopratico.estudoSPRING.entities.User;
 import com.estudopratico.estudoSPRING.entities.enums.OrderStatus;
+import com.estudopratico.estudoSPRING.repositories.CategoryRepository;
 import com.estudopratico.estudoSPRING.repositories.OrderRepository;
 import com.estudopratico.estudoSPRING.repositories.UserRepository;
 
@@ -18,6 +20,8 @@ import com.estudopratico.estudoSPRING.repositories.UserRepository;
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
 
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -33,6 +37,10 @@ public class TestConfig implements CommandLineRunner{
 
         Order o1 = new Order(null, Instant.parse("2023-07-30T20:54:10Z"), OrderStatus.PAID, u1);
         orderRepository.saveAll(Arrays.asList(o1));
+
+        Category cat1 = new Category(null, "Frutas");
+
+        categoryRepository.saveAll(Arrays.asList(cat1));
     }
 
 
