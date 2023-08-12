@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.estudopratico.estudoSPRING.entities.Category;
 import com.estudopratico.estudoSPRING.entities.Order;
+import com.estudopratico.estudoSPRING.entities.OrderItem;
 import com.estudopratico.estudoSPRING.entities.Product;
 import com.estudopratico.estudoSPRING.entities.User;
 import com.estudopratico.estudoSPRING.entities.enums.OrderStatus;
@@ -17,6 +18,7 @@ import com.estudopratico.estudoSPRING.repositories.CategoryRepository;
 import com.estudopratico.estudoSPRING.repositories.OrderRepository;
 import com.estudopratico.estudoSPRING.repositories.ProductRepository;
 import com.estudopratico.estudoSPRING.repositories.UserRepository;
+import com.estudopratico.estudoSPRING.repositories.OrderItemRepository;
 
 @Configuration
 @Profile("test")
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner{
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired 
+    private OrderItemRepository orderItemRepository;
     
 
     @Override
@@ -52,6 +57,10 @@ public class TestConfig implements CommandLineRunner{
 
         p1.getCategories().add(cat1);
         productRepository.saveAll(Arrays.asList(p1));
+
+        OrderItem oi1 = new OrderItem(o1,p1,2,p1.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1));
 
     }
 
