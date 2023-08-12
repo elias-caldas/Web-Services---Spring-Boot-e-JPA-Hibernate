@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -28,6 +31,10 @@ public class Product implements Serializable {
     private String description;
     private Double price;
     private String imgUrl;
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
 
     @ManyToMany
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), 
@@ -115,6 +122,14 @@ public class Product implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public Set<Order> getOrders(){
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items){
+            set.add(x.getOrder());
+        }
+        return set;
     }
 
     
